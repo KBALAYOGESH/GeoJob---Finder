@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+* {
+    background: inherit;
+}
+
+:root {
+    --light: #E7E7E7;
+    --dark: #3C3C3B;
+    --primary: #31F8C3;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    color: var(--dark);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+h1.title {
+    margin: 0 0 1rem 0;
+    font-weight: 700;
+}
+
+header {
+    background: white;
+    height: 9rem;
+    width: 100%;
+}
+
+#nav {
+    height: 12rem;
+    flex-direction: column;
+}
+
+.search {
+    width: 40vw;
+    max-width: 20rem;
+    height: 5rem;
+    font-size: 1.4rem;
+    border-color: var(--light);
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.search:focus {
+    outline: none;
+    border-color: var(--light);
+}
+
+.search::placeholder {
+    color: var(--dark);
+    font-weight: 400;
+}
+
+#city-search-bar {
+    border-radius: 0 10rem 10rem 0;
+    padding-right: 5rem;
+}
+
+#search-bar {
+    border-radius: 10rem 0 0 10rem;
+    border-right: none;
+    padding-left: 2rem;
+}
+
+#searchForm {
+    position: relative;
+}
+
+#search {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: var(--primary);
+    border-radius: 100%;
+    padding: 0;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+#search:hover {
+    outline: none;
+    border: none;
+}
+
+i {
+    font-size: 1.2rem;
+}
+
+#buttons-container {
+    height: 8rem;
+    border-bottom: solid 1px var(--light);
+    box-shadow: 0 .5rem .8rem rgba(0, 0, 0, 0.06);
+}
+
+.button-wrapper {
+    margin: auto;
+}
+
+.main-btn {
+    margin-right: 1rem;
+    background: white;
+    color: var(--dark);
+    border: 1px solid var(--light);
+    text-transform: none;
+    font-weight: 500;
+    font-size: 1.4rem;
+    border-radius: .5rem;
+}
+
+.main-btn:hover {
+    background: var(--primary);
+    color: var(--dark);
+}
+
+.secondary-btn {
+    margin-right: 4rem;
+    background: var(--primary);
+    color: var(--dark);
+    border: 1px solid var(--light);
+    text-transform: none;
+    font-weight: 500;
+    font-size: 1.4rem;
+    border-radius: .5rem;
+}
+
+#map-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+}
+
+#map {
+    height: 100vh;
+}
+
+#toggle-map-btn {
+    position: fixed;
+    right: 1rem;
+    bottom: 2rem;
+    background: var(--primary);
+    border-radius: 100%;
+    padding: 0;
+    height: 6rem;
+    width: 6rem;
+}
+
+main {
+    margin-top: 13rem;
+}
+
+.uk-card {
+    margin: 1rem 2rem;
+    font-size: 1.6rem;
+}
+
+.uk-button-secondary {
+    margin-bottom: .5rem;
+}
+
+#searchDescCont {
+    margin: 1rem 2rem;
+    border-bottom: solid 1px var(--light);
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+#searchAmountCont {
+    margin: 2rem 2rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+#past-searches-list button {
+    margin-right: 4rem;
+    margin-bottom: 1rem;
+    background: var(--primary);
+    color: var(--dark);
+    border: 1px solid var(--light);
+    text-transform: none;
+    font-weight: 500;
+    font-size: 1.4rem;
+    border-radius: .5rem;
+}
+
+
+.uk-dropdown form label {
+    font-size: 1.4rem;
+}
+
+.uk-dropdown form select {
+    margin: 1rem 0;
+    border-radius: 10rem;
+    font-size: 1.4rem;
+    color: var(--dark);
+}
+
+.uk-dropdown form select>option {
+    color: var(--dark) !important;
+}
+
+.uk-dropdown form button {
+    margin-right: 4rem;
+    margin-bottom: 1rem;
+    background: white;
+    color: var(--dark);
+    border: 1px solid var(--light);
+    text-transform: none;
+    font-weight: 500;
+    font-size: 1.4rem;
+    border-radius: .5rem;
+}
+
+.uk-dropdown form button:hover {
+    background: var(--primary);
+    border: none;
+    padding: 1px 31px;
+}
+
+@media screen and ( min-width: 1200px ) {
+    main {
+        margin-top: 10rem;
+    }
+
+    .hidden-mob {
+        display: block;
+    }
+
+    .mob-only {
+        display: none;
+    }
+
+    h1.title {
+        margin: 0 50rem 0 10rem;
+    }
+
+    #nav {
+        height: 8rem;
+        border-bottom: var(--light) 1px solid;
+        flex-direction: row;
+    }
+
+    .button-wrapper {
+        margin-left: 4rem;
+    }
+    
+    .main-btn {
+        margin-right: 4rem;
+    }
+} 

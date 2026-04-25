@@ -1,0 +1,30 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build: .
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/geojobs
+      - JWT_ACCESS_SECRET=dev-access-secret
+      - JWT_REFRESH_SECRET=dev-refresh-secret
+      - JWT_ACCESS_TTL=15m
+      - JWT_REFRESH_TTL=30d
+      - UPLOADS_DIR=uploads
+      - MAX_UPLOAD_MB=5
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
+

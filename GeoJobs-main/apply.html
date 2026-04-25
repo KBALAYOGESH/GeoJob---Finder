@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply • GeoJobs</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #31F8C3;
+      --primary-dark: #1dd4a3;
+      --dark: #1a1a2e;
+      --dark2: #16213e;
+      --card-bg: #ffffff;
+      --text: #2d2d2d;
+      --text-muted: #888;
+      --border: #e5e7eb;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --radius: 14px;
+    }
+
+    *,
+    *::before,
+    *::after { box-sizing: border-box; }
+
+    html { font-size: 62.5%; }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #f4f6fb;
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 1.5rem;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.6rem;
+      padding: 1.6rem 2.2rem;
+      background: var(--dark);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.18);
+    }
+
+    .logo {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+      white-space: nowrap;
+    }
+
+    .logo span { color: #fff; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .8rem;
+      color: #fff;
+      font-weight: 600;
+      padding: .8rem 1.2rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: all .18s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(49,248,195,0.14);
+      border-color: rgba(49,248,195,0.45);
+      color: #fff;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 2.6rem auto;
+      padding: 0 2.2rem 4rem;
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 2.2rem;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .card-head {
+      padding: 2.2rem 2.2rem 1.6rem;
+      display: flex;
+      gap: 1.4rem;
+      align-items: flex-start;
+      background: linear-gradient(180deg, rgba(49,248,195,0.13), rgba(255,255,255,0));
+    }
+
+    .job-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), #6ee7f7);
+      color: var(--dark);
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      flex: 0 0 auto;
+    }
+
+    .kicker {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+
+    .job-title {
+      margin: 0 0 .3rem;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--dark2);
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .job-sub {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .form { padding: 1.8rem 2.2rem 2.2rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 1.4rem;
+      margin-top: 1.2rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--dark2);
+      margin-bottom: .6rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      font-size: 1.45rem;
+      font-family: inherit;
+      outline: none;
+      background: #fff;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.55;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(49,248,195,0.9);
+      box-shadow: 0 0 0 4px rgba(49,248,195,0.18);
+    }
+
+    .hint {
+      margin-top: .6rem;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: .9rem;
+      margin-top: 1.6rem;
+      padding: 1.2rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(26,26,46,0.02);
+    }
+
+    .consent input { margin-top: .3rem; }
+    .consent span { color: #444; font-weight: 600; line-height: 1.4; }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1.6rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .9rem;
+      border-radius: 12px;
+      padding: 1.05rem 1.4rem;
+      font-size: 1.45rem;
+      font-weight: 800;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform .12s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .btn-ghost {
+      background: #fff;
+      border-color: var(--border);
+      color: var(--dark2);
+    }
+
+    .btn-ghost:hover { background: #f7f9ff; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--dark);
+    }
+
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .side { position: sticky; top: 92px; }
+
+    .side-card {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 1.8rem;
+    }
+
+    .side-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--dark2);
+      margin-bottom: 1.2rem;
+    }
+
+    .side-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .side-list li {
+      display: flex;
+      gap: .9rem;
+      align-items: flex-start;
+      color: #444;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .side-list i { color: var(--primary-dark); margin-top: .2rem; }
+
+    .success {
+      padding: 1.8rem 2.2rem 2.2rem;
+      display: none;
+    }
+
+    .success.show { display: block; }
+
+    .success-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.2rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .success-title {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: var(--dark2);
+      line-height: 1.2;
+    }
+
+    .success-sub {
+      color: var(--text-muted);
+      font-weight: 650;
+      margin-top: .4rem;
+      line-height: 1.35;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 1.2rem;
+    }
+
+    .sum-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      background: #fff;
+    }
+
+    .sum-label {
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--text-muted);
+      font-weight: 800;
+      margin-bottom: .4rem;
+    }
+
+    .sum-value {
+      color: #333;
+      font-weight: 750;
+      line-height: 1.35;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .summary-wide { grid-column: 1 / -1; }
+
+    @media (max-width: 940px) {
+      .wrap { grid-template-columns: 1fr; }
+      .side { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      .grid, .grid2 { grid-template-columns: 1fr; }
+      .actions { flex-direction: column-reverse; }
+      .btn { justify-content: center; }
+      .summary { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="./index.html">Geo<span>Jobs</span></a>
+    <a class="back-link" href="./index.html" aria-label="Back to jobs">
+      <i class="fas fa-arrow-left"></i>
+      Back to jobs
+    </a>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="card-head">
+        <div class="job-badge" aria-hidden="true"><i class="fas fa-briefcase"></i></div>
+        <div class="job-meta">
+          <div class="kicker">Application for</div>
+          <h1 class="job-title" id="jobTitle">Job</h1>
+          <div class="job-sub" id="jobSub">Company · Location</div>
+        </div>
+      </div>
+
+      <form class="form" action="#" method="post" enctype="multipart/form-data">
+        <div class="grid">
+          <div class="field">
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" type="text" placeholder="Enter your full name" autocomplete="name" required />
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="+44 7xxx xxx xxx" autocomplete="tel" required />
+          </div>
+
+          <div class="field">
+            <label for="location">Current location</label>
+            <input id="location" name="location" type="text" placeholder="City, Country" autocomplete="address-level2" />
+          </div>
+
+          <div class="field">
+            <label for="portfolio">Portfolio / LinkedIn</label>
+            <input id="portfolio" name="portfolio" type="url" placeholder="https://..." />
+          </div>
+
+          <div class="field">
+            <label for="notice">Notice period</label>
+            <select id="notice" name="notice">
+              <option value="immediately">Immediately</option>
+              <option value="2_weeks">2 weeks</option>
+              <option value="1_month" selected>1 month</option>
+              <option value="2_months">2 months</option>
+              <option value="3_months">3 months</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="cover">Why are you a good fit?</label>
+          <textarea id="cover" name="cover" rows="6" placeholder="Briefly describe your experience, strengths, and why you want this role." required></textarea>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="resume">Resume (PDF/DOC)</label>
+            <input id="resume" name="resume" type="file" accept=".pdf,.doc,.docx" required />
+            <div class="hint">Max 5MB. PDF preferred.</div>
+          </div>
+
+          <div class="field">
+            <label for="expectedSalary">Expected salary</label>
+            <input id="expectedSalary" name="expectedSalary" type="text" placeholder="e.g. £55,000" />
+          </div>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" name="consent" required />
+          <span>I confirm that the information I provided is accurate.</span>
+        </label>
+
+        <div class="actions">
+          <a class="btn btn-ghost" href="./index.html">Cancel</a>
+          <button class="btn btn-primary" type="submit">
+            Submit application
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </form>
+
+      <section class="success" id="success">
+        <div class="success-top">
+          <div>
+            <h2 class="success-title">Application submitted</h2>
+            <div class="success-sub" id="successSub">Here are the details you provided.</div>
+          </div>
+          <button class="btn btn-ghost" type="button" id="editBtn">
+            Edit details
+            <i class="fas fa-pen"></i>
+          </button>
+        </div>
+
+        <div class="actions" style="justify-content:flex-start;margin-top:0;">
+          <button class="btn btn-primary" type="button" id="printBtn">
+            Print / Save as PDF
+            <i class="fas fa-print"></i>
+          </button>
+        </div>
+
+        <div class="summary" id="summary"></div>
+      </section>
+    </section>
+
+    <section class="side">
+      <div class="side-card">
+        <div class="side-title">Before you submit</div>
+        <ul class="side-list">
+          <li><i class="fas fa-check"></i> Keep your resume relevant to this role</li>
+          <li><i class="fas fa-check"></i> Mention key skills from the job description</li>
+          <li><i class="fas fa-check"></i> Add a portfolio link if you have one</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const p = new URLSearchParams(location.search);
+    const jobId = p.get('jobId');
+    const title = p.get('title');
+    const company = p.get('company');
+    const loc = p.get('location');
+
+    if (title) document.getElementById('jobTitle').textContent = title;
+
+    const parts = [];
+    if (company) parts.push(company);
+    if (loc) parts.push(loc);
+    if (parts.length) document.getElementById('jobSub').textContent = parts.join(' · ');
+
+    const form = document.querySelector('form.form');
+    const success = document.getElementById('success');
+    const summary = document.getElementById('summary');
+    const editBtn = document.getElementById('editBtn');
+    const printBtn = document.getElementById('printBtn');
+    const successSub = document.getElementById('successSub');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    const API_BASE = localStorage.getItem('gj_api') || 'http://localhost:4000/api';
+    const accessToken = localStorage.getItem('gj_accessToken');
+
+    function safe(v) {
+      const s = (v ?? '').toString().trim();
+      return s.length ? s : '—';
+    }
+
+    function addItem(label, value, wide = false) {
+      const item = document.createElement('div');
+      item.className = `sum-item${wide ? ' summary-wide' : ''}`;
+      item.innerHTML = `<div class="sum-label"></div><div class="sum-value"></div>`;
+      item.querySelector('.sum-label').textContent = label;
+      item.querySelector('.sum-value').textContent = value;
+      summary.appendChild(item);
+    }
+
+    async function apiFetch(path, options = {}) {
+      const headers = new Headers(options.headers || {});
+      headers.set('Accept', 'application/json');
+      if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`);
+      return fetch(`${API_BASE}${path}`, { ...options, headers });
+    }
+
+    async function uploadResumeIfNeeded() {
+      const resumeFile = document.getElementById('resume')?.files?.[0];
+      if (!resumeFile) return null;
+      if (!accessToken) return null;
+
+      const fd = new FormData();
+      fd.append('resume', resumeFile);
+
+      const res = await apiFetch('/profile/me/resume', { method: 'POST', body: fd });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error?.message || 'Resume upload failed');
+      return data?.file?._id || null;
+    }
+
+    async function submitApplication(payload) {
+      if (!jobId) return { mode: 'local', reason: 'Missing jobId' };
+      if (!accessToken) return { mode: 'local', reason: 'Not logged in' };
+
+      const res = await apiFetch(`/jobs/${encodeURIComponent(jobId)}/apply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error?.message || 'Application submit failed');
+      return { mode: 'backend', application: data.application };
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fd = new FormData(form);
+      const resumeFile = document.getElementById('resume')?.files?.[0];
+
+      summary.innerHTML = '';
+      addItem('Job id', safe(jobId), false);
+      addItem('Job title', safe(title), false);
+      addItem('Company', safe(company), false);
+      addItem('Job location', safe(loc), false);
+      addItem('Full name', safe(fd.get('fullName')), false);
+      addItem('Email', safe(fd.get('email')), false);
+      addItem('Phone', safe(fd.get('phone')), false);
+      addItem('Current location', safe(fd.get('location')), false);
+      addItem('Portfolio / LinkedIn', safe(fd.get('portfolio')), false);
+      addItem('Notice period', safe(fd.get('notice')), false);
+      addItem('Expected salary', safe(fd.get('expectedSalary')), false);
+      addItem('Resume file', resumeFile ? resumeFile.name : '—', false);
+      addItem('About you', safe(fd.get('cover')), true);
+
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.7';
+
+      try {
+        let resumeFileId = null;
+        try {
+          resumeFileId = await uploadResumeIfNeeded();
+        } catch (err) {
+          addItem('Backend resume upload', `Failed: ${err.message}`, true);
+        }
+
+        const result = await submitApplication({
+          fullName: fd.get('fullName') || undefined,
+          email: fd.get('email') || undefined,
+          phone: fd.get('phone') || undefined,
+          location: fd.get('location') || undefined,
+          portfolio: fd.get('portfolio') || undefined,
+          notice: fd.get('notice') || undefined,
+          expectedSalary: fd.get('expectedSalary') || undefined,
+          coverLetter: safe(fd.get('cover')) === '—' ? '' : safe(fd.get('cover')),
+          resumeFileId: resumeFileId || undefined
+        });
+
+        if (result.mode === 'backend') {
+          addItem('Backend application status', safe(result.application?.status), false);
+          addItem('Backend application id', safe(result.application?._id), false);
+          successSub.textContent = 'Saved in backend and shown below.';
+        } else {
+          addItem('Backend submit', `Not submitted (${result.reason}).`, true);
+          successSub.textContent = 'Shown below (not saved to backend).';
+        }
+      } catch (err) {
+        addItem('Backend submit', `Failed: ${err.message}`, true);
+        successSub.textContent = 'Shown below (backend submit failed).';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '';
+      }
+
+      form.style.display = 'none';
+      success.classList.add('show');
+      success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    editBtn.addEventListener('click', () => {
+      success.classList.remove('show');
+      form.style.display = '';
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    printBtn.addEventListener('click', () => window.print());
+  </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+openapi: 3.0.3
+info:
+  title: GeoJobs API
+  version: 1.0.0
+servers:
+  - url: http://localhost:4000/api
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+  /auth/register:
+    post:
+      summary: Register user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, role]
+              properties:
+                email: { type: string }
+                password: { type: string }
+                role: { type: string, enum: [jobseeker, recruiter, admin] }
+      responses:
+        "201": { description: Created }
+  /auth/login:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        "200": { description: OK }
+  /jobs:
+    get:
+      summary: List/search jobs
+      parameters:
+        - in: query
+          name: q
+          schema: { type: string }
+        - in: query
+          name: location
+          schema: { type: string }
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: type
+          schema: { type: string }
+        - in: query
+          name: sort
+          schema: { type: string, enum: [latest, salary_desc, relevance] }
+      responses:
+        "200": { description: OK }
+    post:
+      summary: Create job (recruiter/admin)
+      security:
+        - bearerAuth: []
+      responses:
+        "201": { description: Created }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
